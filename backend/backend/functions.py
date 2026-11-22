@@ -108,3 +108,49 @@ def verify_token(token,token_type):
     return False
 
 
+# A1
+def register_user(username, email, password):
+    email = email.lower()
+    session = Session(engine)
+    user = session.query(User).filter_by(email=email).first()
+    if user is not None:
+        session.close()
+        return False
+
+    new_user = User(
+        username=username,
+        email=email,
+        hashed_password=ph.hash(password),
+        created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    )
+    session.add(new_user)
+    session.commit()
+    response = {
+        "id": new_user.user_id,
+        "username": new_user.username,
+        "email": new_user.email,
+    }
+    session.close()
+    return response
+
+
+# E1
+def get_notes(user_id):
+    session = Session(engine)
+    notes = (
+        session.query(Notes)
+        .filter(Notes.user_id == user_id)  
+        .order_by(Notes.id())
+        .all()
+    )
+    response = []
+    for n in notes:
+        response.append({
+            "id": n.id,
+            "user_id": n.user_id,
+            "title": n.title,
+            "content": n.content,
+            "created_at": n.created_at,
+        })
+    session.close()
+    return response

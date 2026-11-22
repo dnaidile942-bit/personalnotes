@@ -1,6 +1,6 @@
 from fastapi import FastAPI , HTTPException , Header , Body
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel , Field
+from pydantic import BaseModel , Field , EmailStr
 import functions
 
 app = FastAPI(title="Personal Notes Manager API", description="Manage personal notes securely")
@@ -12,6 +12,14 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+class UserRegister(BaseModel):
+    username: str = Field(min_length=1)
+    email: EmailStr                      
+    password: str = Field(min_length=1)  
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=1)
 
 def authorize(token):
     payload = functions.verify_token(token=token, token_type="access")
@@ -24,6 +32,13 @@ class NoteCreate(BaseModel):
     title: str = Field(min_length=1)
     content: str = Field(min_length=1)
 
+#A1
+@app.post("/register")
+def register(username=Body(), password=Body() , email=Body()):
+    user = functions.register_user(username=username, email=email, password=password)
+    if not user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    return {"message": "User registered successfully", "user": user}
 
 # A2
 @app.post("/login")
@@ -44,6 +59,11 @@ def refresh(refresh_token=Header(None)):
     access_token = functions.create_token(user_id=payload["user_id"],username=payload["username"],token_type="access")
     return {"access_token": access_token}
 
+#E1
+@app.get("/notes")
+def get_notes(token=Header(None)):
+    payload = authorize(token)
+    return functions.get_notes(user_id=payload["user_id"])
 
 # E2
 @app.post("/notes")
