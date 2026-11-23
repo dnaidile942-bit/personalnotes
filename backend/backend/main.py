@@ -42,8 +42,8 @@ def register(username=Body(), password=Body() , email=Body()):
 
 # A2
 @app.post("/login")
-def login(email=Body(), password=Body()):
-    token = functions.verify_login(email=email, password=password)
+def login(user: UserLogin):
+    token = functions.verify_login(email=user.email, password=user.password)
     if not token:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     return token

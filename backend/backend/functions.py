@@ -62,6 +62,7 @@ def add_note(user_id, title, content):
 
 # A2
 def verify_login(email,password):
+    email = email.lower()
     session = Session(engine)
     user = session.query(User).filter_by(email=email).first()
     if user is None:
