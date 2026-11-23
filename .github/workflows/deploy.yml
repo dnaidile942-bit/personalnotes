@@ -49,6 +49,6 @@ jobs:
             sudo systemctl enable --now docker
             sudo docker pull ${{ env.IMAGE }}:${{ env.VERSION }}
             sudo docker rm -f personalnotes || true
-            sudo docker run -d --name personalnotes --restart unless-stopped -p 8000:8001 ${{ env.IMAGE }}:${{ env.VERSION }}
+            sudo docker run -d --name personalnotes --restart unless-stopped -p 8000:8001 -v /opt/personalnotes/data:/app/data ${{ env.IMAGE }}:${{ env.VERSION }}
             sudo docker image prune -af
             sudo docker ps --filter name=personalnotes
