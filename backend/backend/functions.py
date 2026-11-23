@@ -140,7 +140,7 @@ def get_notes(user_id):
     notes = (
         session.query(Notes)
         .filter(Notes.user_id == user_id)  
-        .order_by(Notes.id())
+        .order_by(Notes.id.desc())
         .all()
     )
     response = []
