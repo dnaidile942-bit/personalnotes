@@ -3,7 +3,7 @@ import Login from "./components/login";
 import Registar from "./components/registar";
 import Notes from "./components/notes";
 
-const API_URL = "http://127.0.0.1:8001";
+const API_URL = "http://127.0.0.1:8000";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -13,22 +13,22 @@ function App() {
   if (accessToken !== "") {
     return (
       <Notes
-        apiUrl={API_URL}
+        API_URL={API_URL}
         accessToken={accessToken}
         refreshToken={refreshToken}
-        // setAccessToken={setAccessToken}
-        // setRefreshToken={setRefreshToken}
+        setAccessToken={setAccessToken}
+        setRefreshToken={setRefreshToken}
       />
     );
   }
 
   if (page === "registar") {
-    return <Registar apiUrl={API_URL} setPage={setPage} />;
+    return <Registar API_URL={API_URL} setPage={setPage} />;
   }
 
   return (
     <Login
-      apiUrl={API_URL}
+      API_URL={API_URL}
       setAccessToken={setAccessToken}
       setRefreshToken={setRefreshToken}
       setPage={setPage}

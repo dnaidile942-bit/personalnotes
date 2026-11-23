@@ -93,13 +93,28 @@ SQLite database: `notes.db`
 
 ## 6. Screenshots
 
-1. **Registration:** 
-2. **Login:** 
-3. **Notes Dashboard:** 
-4. **Error Message:** 
-5. **API Endpoint in Swagger UI:**
-6. **Successful GitHub Actions Run:**
+1. **Registration:** ![alt text](image-2.png)
+2. **Login:** ![alt text](image-3.png)
+3. **Notes Dashboard:** ![alt text](image-4.png)
+4. **Error Message:** ![alt text](image.png)
+5. **API Endpoint in Swagger UI:**![alt text](image-1.png)
+6. **Successful GitHub Actions Run:**![alt text](image-5.png)
 
 ## 7. Known Issues and Future Improvements
+
+Known Issues
+
+The application requires an active backend server to function.
+The application currently supports basic note creation and viewing.
+Password recovery and email verification are not implemented.
+
+Future Improvements
+
+Add an option to edit and delete notes.
+Add a search feature to find notes quickly.
+Add password reset and email verification.
+Improve the user interface and make it mobile-friendly.
+
+
 
 
